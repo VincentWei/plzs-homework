@@ -4,8 +4,8 @@ CXXFLAGS = -Wall -Wextra -Werror -O2 -g -std=c++11
 
 ifeq ($(CXX), g++)
     CXXFLAGS += -fmax-errors=10
-else ifeq ($(CXX), clang)
-  CXXFLAGS += -ferror-limit=10
+else ifeq ($(CXX), clang++)
+    CXXFLAGS += -ferror-limit=10
 endif
 
 all:$(TARGETS)

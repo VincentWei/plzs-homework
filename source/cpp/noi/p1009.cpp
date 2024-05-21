@@ -1,9 +1,12 @@
-/* This implementation is too slow.
-   We need to optimize it forthmore.
-*/
+/*
+ * This file implements arbitrary arithmetic for natural numbers:
+ * addition, subtraction (decrement), and multiplication.
+ *
+ * Copyright (C) 2024 FMSoft <https://www.fmsoft.cn>.
+ * License: GPLv3
+ */
 
 #include <iostream>
-#include <sstream>
 #include <string>
 #include <vector>
 #include <cassert>
@@ -163,7 +166,7 @@ void nap_factorial_recursive(string &r, const string &n)
     }
 
     int native_n;
-    stringstream(n) >> native_n;
+    native_n = stoi(n);
     if (cached_factorial[native_n] != "") {
         r = cached_factorial[native_n];
         return;

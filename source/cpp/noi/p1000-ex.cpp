@@ -1,9 +1,15 @@
+/*
+ * This program prints an ASCII art picture, an alternative implemenation
+ * using string array to define the lines.
+ *
+ * Copyright (C) 2024 FMSoft <https://www.fmsoft.cn>.
+ * License: GPLv3
+ */
 #include <iostream>
 
 int main()
 {
-
-    const char * lines[] = {
+    const char *lines[] = {
         "                ********",
         "               ************",
         "               ####....#.",
@@ -29,7 +35,7 @@ int main()
     };
 
     for (size_t i = 0; i < sizeof(lines) / sizeof(lines[0]); i++) {
-	    std::cout << lines[i] << std::endl;
+        std::cout << lines[i] << std::endl;
     }
 
     return 0;

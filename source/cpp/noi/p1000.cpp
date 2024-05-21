@@ -1,3 +1,9 @@
+/*
+ * This program prints an ASCII art picture.
+ *
+ * Copyright (C) 2024 FMSoft <https://www.fmsoft.cn>.
+ * License: GPLv3
+ */
 #include <iostream>
 
 int main()

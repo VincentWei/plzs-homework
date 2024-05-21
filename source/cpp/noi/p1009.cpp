@@ -1,11 +1,10 @@
 /*
- * This file implements arbitrary arithmetic for natural numbers:
+ * This program implements arbitrary arithmetic for natural numbers:
  * addition, subtraction (decrement), and multiplication.
  *
  * Copyright (C) 2024 FMSoft <https://www.fmsoft.cn>.
  * License: GPLv3
  */
-
 #include <iostream>
 #include <string>
 #include <vector>

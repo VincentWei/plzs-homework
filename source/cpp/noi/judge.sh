@@ -1,6 +1,13 @@
 #!/bin/bash
 
-TIME=/usr/bin/time
+SYS=`uname`
+if [ $SYS = Darwin ]
+then
+    TIME='/usr/bin/time -l -h -o'
+elif [$SYS = Linux ]
+then
+    TIME='/usr/bin/time -v -o'
+fi
 
 if [ $# -ne 1 ]
 then
@@ -29,7 +36,7 @@ do
     timef=${inf%in*}time
     if [ -r $outf ]
     then
-        $TIME -l -h -o $timef ./$prog < $inf > tmp.out
+        $TIME $timef ./$prog < $inf > tmp.out
         diff $outf tmp.out
         if [ $? -eq 0 ]
         then

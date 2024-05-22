@@ -4,7 +4,7 @@ SYS=`uname`
 if [ $SYS = Darwin ]
 then
     TIME='/usr/bin/time -l -h -o'
-elif [$SYS = Linux ]
+elif [ $SYS = Linux ]
 then
     TIME='/usr/bin/time -v -o'
 fi

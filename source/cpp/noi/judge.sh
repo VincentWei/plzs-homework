@@ -1,0 +1,47 @@
+#!/bin/bash
+
+TIME=/usr/bin/time
+
+if [ $# -ne 1 ]
+then
+    echo 'Usage: judge.sh <PROGRAM>'
+    exit 1
+fi
+
+prog=$1
+
+if ! [ -x "./$prog" ]
+then
+    echo "No such file or not an executable: ./$prog; try to make it..."
+    make $prog
+    if [ $? -ne 0 ]
+    then
+        echo "Failed to make $prog"
+        exit 1
+    fi
+fi
+
+for inf in cases-$prog/*.in
+do
+    rm -f tmp.out
+
+    outf=${inf%in*}out
+    timef=${inf%in*}time
+    if [ -r $outf ]
+    then
+        $TIME -l -h -o $timef ./$prog < $inf > tmp.out
+        diff $outf tmp.out
+        if [ $? -eq 0 ]
+        then
+            echo "Case $inf passed"
+        else
+            echo "Case $inf failed"
+            exit 1
+        fi
+    else
+        echo "No valid output file ($outf), skip case: $inf"
+    fi
+done
+
+rm -f tmp.out
+exit 0

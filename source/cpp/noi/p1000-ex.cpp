@@ -1,6 +1,11 @@
 /*
  * This program prints an ASCII art picture, an alternative implemenation
- * using string array to define the lines.
+ * using cstring array to define the lines.
+ *
+ * It resolves problem P1000:
+ *  <https://www.luogu.com.cn/problem/P1000>
+ *
+ * Author: Vincent Wei <https://github.com/VincentWei>
  *
  * Copyright (C) 2024 FMSoft <https://www.fmsoft.cn>.
  * License: GPLv3

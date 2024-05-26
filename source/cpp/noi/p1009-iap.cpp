@@ -1,10 +1,12 @@
 /*
- * This program implements arbitrary arithmetic for natural numbers:
- * addition, subtraction (decrement), and multiplication.
+ * This program implements arbitrary arithmetic for integer numbers:
+ * addition, subtraction, and multiplication.
  *
- * Author: Vincent Wei <https://github.com/VincentWei>
+ * XXX: NOT FINISHED.
  *
  * Copyright (C) 2024 FMSoft <https://www.fmsoft.cn>.
+ * Author: Vincent Wei <https://github.com/VincentWei>.
+ *
  * License: GPLv3
  */
 #include <iostream>
@@ -14,7 +16,11 @@
 
 using namespace std;
 
-void nap_add(string &result, const string &a, const string &b)
+// complement number
+// 7 - 3 = 7 + 6 - 10 + 1 = 13 - 10 + 1 = -4;
+// 7 - 33 = 7 + 66 - 100 + 1 = 73 - 100 + 1 = 27 + 1 = -28;
+
+void iap_add(string &result, const string &a, const string &b)
 {
     size_t len_a = a.length();
     size_t len_b = b.length();
@@ -42,7 +48,7 @@ void nap_add(string &result, const string &a, const string &b)
     }
 }
 
-void nap_add_to(string &r, const string &a)
+void iap_add_to(string &r, const string &a)
 {
     size_t len_r = r.length();
     size_t len_a = a.length();
@@ -72,7 +78,7 @@ void nap_add_to(string &r, const string &a)
     }
 }
 
-bool nap_not_zero(const string &n)
+bool iap_not_zero(const string &n)
 {
     size_t len = n.length();
     for (size_t i = 0; i < len; i++) {
@@ -83,46 +89,48 @@ bool nap_not_zero(const string &n)
     return false;
 }
 
-void nap_mul(string &result, const string &a, const string &b)
+void iap_mul(string &result, const string &a, const string &b)
 {
     string times = "0";
 
     result = "0";
     while (b != times) {
         string tmp;
-        nap_add(tmp, result, a);
+        iap_add(tmp, result, a);
         result = tmp;
 
-        nap_add(tmp, times, "1");
+        iap_add(tmp, times, "1");
         times = tmp;
     }
 }
 
-void nap_mul_op(string &result, const string &a, const string &b)
+// 3 * (-10)
+// -3 * 10
+void iap_mul_op(string &result, const string &a, const string &b)
 {
     string times = "0";
     result = "0";
     while (b != times) {
-        nap_add_to(result, a);
-        nap_add_to(times, "1");
+        iap_add_to(result, a);
+        iap_add_to(times, "1");
     }
 }
 
-void nap_factorial(string &r, const string &n)
+void iap_factorial(string &r, const string &n)
 {
     string times = "1";
 
     r = n;
     while (n != times) {
         string tmp;
-        nap_mul_op(tmp, r, times);
+        iap_mul_op(tmp, r, times);
         r = tmp;
 
-        nap_add_to(times, "1");
+        iap_add_to(times, "1");
     }
 }
 
-void nap_dec(string &n)
+void iap_dec(string &n)
 {
     assert(n != "0" && n != "");
 
@@ -159,7 +167,7 @@ void nap_dec(string &n)
 
 static vector<string> cached_factorial(50);
 
-void nap_factorial_recursive(string &r, const string &n)
+void iap_factorial_recursive(string &r, const string &n)
 {
     if (n == "1") {
         r = "1";
@@ -174,11 +182,11 @@ void nap_factorial_recursive(string &r, const string &n)
     }
 
     string prev_n = n;
-    nap_dec(prev_n);
+    iap_dec(prev_n);
 
-    nap_factorial_recursive(r, prev_n);
+    iap_factorial_recursive(r, prev_n);
     string tmp;
-    nap_mul(tmp, r, n);
+    iap_mul(tmp, r, n);
     r = tmp;
 
     // cached the result
@@ -190,17 +198,17 @@ void summary_of_factorials(string &r, const string &n)
     string times = "1";
 
     r = "0";
-    if (!nap_not_zero(n))
+    if (!iap_not_zero(n))
         return;
 
     while (true) {
         string factorial;
-        nap_factorial(factorial, times);
-        nap_add_to(r, factorial);
+        iap_factorial(factorial, times);
+        iap_add_to(r, factorial);
 
         if (n == times)
             break;
-        nap_add_to(times, "1");
+        iap_add_to(times, "1");
     }
 }
 
@@ -208,52 +216,58 @@ int main()
 {
     string r;
 
-    // test nap_add_to()
+    // test iap_add_to()
     r = "0";
-    nap_add_to(r, "1");
+    iap_add_to(r, "1");
     assert(r == "1");
-    nap_add_to(r, "9");
+    iap_add_to(r, "9");
     assert(r == "10");
-    nap_add_to(r, "91");
+    iap_add_to(r, "91");
     assert(r == "101");
-    nap_add_to(r, "99");
+    iap_add_to(r, "99");
     assert(r == "200");
-    // cout << "test for nap_add_to() passed\n";
+    // cout << "test for iap_add_to() passed\n";
 
-    // test nap_dec()
+    // test iap_dec()
     r = "1";
-    nap_dec(r);
+    iap_dec(r);
     assert(r == "0");
+    r = "2";
+    iap_dec(r);
+    assert(r == "1");
+    r = "100";
+    iap_dec(r);
+    assert(r == "99");
 
     r = "10";
-    nap_dec(r);
+    iap_dec(r);
     assert(r == "9");
-    // cout << "test for nap_dec() passed\n";
+    // cout << "test for iap_dec() passed\n";
 
-    // test nap_mul_op()
-    nap_mul_op(r, "2", "2");
+    // test iap_mul_op()
+    iap_mul_op(r, "2", "2");
     assert(r == "4");
-    nap_mul_op(r, "2", "10");
+    iap_mul_op(r, "2", "10");
     assert(r == "20");
-    nap_mul_op(r, "20", "20");
+    iap_mul_op(r, "20", "20");
     assert(r == "400");
-    nap_mul_op(r, "11", "11");
+    iap_mul_op(r, "11", "11");
     assert(r == "121");
-    // cout << "test for nap_mul_op() passed\n";
+    // cout << "test for iap_mul_op() passed\n";
 
-    // test for nap_factorial_recursive()
+    // test for iap_factorial_recursive()
     r.clear();
-    nap_factorial_recursive(r, "1");
+    iap_factorial_recursive(r, "1");
     assert(r == "1");
-    nap_factorial_recursive(r, "2");
+    iap_factorial_recursive(r, "2");
     assert(r == "2");
-    nap_factorial_recursive(r, "3");
+    iap_factorial_recursive(r, "3");
     assert(r == "6");
-    nap_factorial_recursive(r, "4");
+    iap_factorial_recursive(r, "4");
     assert(r == "24");
-    nap_factorial_recursive(r, "5");
+    iap_factorial_recursive(r, "5");
     assert(r == "120");
-    // cout << "test for nap_factorial_recursive() passed\n";
+    // cout << "test for iap_factorial_recursive() passed\n";
 
     // the real code for P1009
     string n;

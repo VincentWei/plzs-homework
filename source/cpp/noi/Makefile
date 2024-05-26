@@ -1,4 +1,4 @@
-TARGETS = p1000 p1000-ex p1001 p1009 p1010
+TARGETS = p1000 p1000-ex p1001 p1001-nap p1009 p1009-nt p1010
 
 CXXFLAGS = -Wall -Wextra -Werror -O2 -g -std=c++11
 

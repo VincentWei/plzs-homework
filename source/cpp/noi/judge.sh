@@ -28,7 +28,9 @@ then
     fi
 fi
 
-for inf in cases-$prog/*.in
+problem=${prog%-*}
+
+for inf in cases-$problem/*.in
 do
     rm -f tmp.out
 
